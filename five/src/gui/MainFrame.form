@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.MainFrame">
+  <grid id="27dc6" binding="mainPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="484d8" class="javax.swing.JButton" binding="userManageButton">
+        <constraints/>
+        <properties>
+          <text value="用户管理"/>
+        </properties>
+      </component>
+      <component id="a8f6e" class="javax.swing.JButton" binding="docManageButton">
+        <constraints/>
+        <properties>
+          <text value="档案管理"/>
+        </properties>
+      </component>
+      <component id="8201b" class="javax.swing.JButton" binding="selfInfoButton">
+        <constraints/>
+        <properties>
+          <text value="个人中心"/>
+        </properties>
+      </component>
+      <component id="4e869" class="javax.swing.JButton" binding="exitButton">
+        <constraints/>
+        <properties>
+          <text value="退出登录"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

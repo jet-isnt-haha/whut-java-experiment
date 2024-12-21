@@ -1,0 +1,158 @@
+
+body{
+    overflow: hidden;
+}
+
+.container
+{
+    transform: translate(-50%,-50%);
+    width: 600px; /* 使用整个视口的宽度 */
+    height: 600px; /* 使用整个视口的高度 */
+    position: fixed;
+    top:50%;
+    left: 50%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: darkgray;
+    display:flex;
+    flex-direction: column;
+}
+
+.drag-window{
+    width: 100%;
+    height: 30px; 
+    background-color: aliceblue;
+    display: flex;
+    justify-content: flex-end;
+}
+
+iframe
+{
+    flex-grow: 1; /* 让 iframe 占据剩余空间 */
+    width: 100%;
+    border: none;
+}
+
+.drag-window::before{
+    content:"";
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    position: absolute;
+    left:15px;
+    top:15px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
+
+.close{
+    position: absolute;/* 相对最近祖先元素的定位 */
+    background-color: rgba(0, 255, 170, 0);/* 按钮背景框为透明 */
+    height: 30px;
+    width: 7%;
+    border:none;/* 去掉按钮边框 */
+    right:0;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+}
+.close:hover{
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+}
+
+.maximize{
+    position: absolute;/* 相对最近祖先元素的定位 */
+    background-color: rgba(0, 255, 170, 0);/* 按钮背景框为透明 */
+    height: 30px;
+    width: 7%;
+    border:none;/* 去掉按钮边框 */
+    right:7%;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+}
+
+.maximize:hover{
+    background-color: rgba(174, 166, 166, 0.848);
+    color: white;
+}
+.windowing{
+    position: absolute;/* 相对最近祖先元素的定位 */
+    background-color: rgba(0, 255, 170, 0);/* 按钮背景框为透明 */
+    height: 30px;
+    width: 7%;
+    border:none;/* 去掉按钮边框 */
+    right:7%;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+    visibility:hidden;
+}
+.windowing:hover{
+    background-color: rgba(174, 166, 166, 0.848);
+    color: white;
+}
+.minimize{
+    position: absolute;/* 相对最近祖先元素的定位 */
+    background-color: rgba(0, 255, 170, 0);/* 按钮背景框为透明 */
+    height: 30px;
+    width: 7%;
+    border:none;/* 去掉按钮边框 */
+    right:14%;
+    display: flex;
+    justify-content: center;
+    align-items:center ;  
+}
+
+.minimize:hover{
+    background-color: rgba(174, 166, 166, 0.848);
+    color: white;
+}
+
+
+
+/* 
+.icon{
+    position: absolute;
+    background-color: rgba(225, 0, 255, 0.085);
+    width: 100%;
+    height: 7vh;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+
+}
+.minimize-icon{
+position: absolute;
+color: gray;
+background-color: aquamarine;
+height: 100%;
+width: 5%;
+text-align: center;
+display: inline-block;
+} */
+
+.icon {
+    position: fixed;
+    bottom: 0;
+    right: 50%;
+    background-color: rgba(225, 0, 255, 0.085);
+    width: 7%;
+    height: 7vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.minimize-icon {
+    position: relative;
+    color: gray;
+    background-color: aquamarine;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    visibility: hidden;
+}
