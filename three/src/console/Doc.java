@@ -2,6 +2,7 @@ package console;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Scanner;
 
 /**
  * TODO 档案文件类
@@ -9,7 +10,8 @@ import java.sql.Timestamp;
  * @author gongjing
  * @date 2016/10/13
  */
-class Doc {
+class Doc implements Serializable{
+	private transient Scanner scanner = new Scanner(System.in);
 	private String id;
 	private String creator;
 	private Timestamp timestamp;

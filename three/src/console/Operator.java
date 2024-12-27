@@ -13,9 +13,12 @@ public class Operator extends AbstractUser
         System.out.println("上传文件... ...");
         return true;
     }
-    Scanner scanner =new Scanner(System.in);
+    private transient Scanner scanner = new Scanner(System.in);
     @Override
     public void showMenu() {
+        if (scanner == null) {
+            scanner = new Scanner(System.in);  // 反序列化时重新初始化 scanner
+        }
         System.out.println("*****档案录入人员*****");
         System.out.println("*****1.上传档案*****");
         System.out.println("*****2.下载档案*****");

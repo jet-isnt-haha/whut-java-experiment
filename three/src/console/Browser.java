@@ -9,9 +9,12 @@ public class Browser extends AbstractUser
     Browser(String name, String password, String role) {
         super(name, password, role);
     }
-    Scanner scanner =new Scanner(System.in);
+    private transient Scanner scanner = new Scanner(System.in);
     @Override
     public void showMenu(){
+        if (scanner == null) {
+            scanner = new Scanner(System.in);  // 反序列化时重新初始化 scanner
+        }
         System.out.println("*****档案浏览人员*****");
         System.out.println("*****1.下载档案*****");
         System.out.println("*****2.档案列表*****");

@@ -12,9 +12,12 @@ public class Administrator extends AbstractUser
     Administrator(String name, String password, String role) {
         super(name, password, role);
     }
-    Scanner scanner =new Scanner(System.in);
+    private transient Scanner scanner = new Scanner(System.in);
     @Override
     public void showMenu() {
+        if (scanner == null) {
+            scanner = new Scanner(System.in);  // 反序列化时重新初始化 scanner
+        }
         System.out.println("*****系统管理员*****");
         System.out.println("*****1.新增用户*****");
         System.out.println("*****2.删除用户*****");

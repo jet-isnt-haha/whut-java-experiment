@@ -8,13 +8,12 @@ import java.util.Scanner;
 
 import static console.DataProcessing.*;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner =new Scanner(System.in);
-
-
+public class Main{
+    public static void main(String[] args) throws IOException {
+         Scanner scanner = new Scanner(System.in);
         while(true){
-            init();
+
+
             System.out.println("*************欢迎来到档案管理系统***************\n");
             System.out.println("1.登录         0.退出\n");
             System.out.println("********************************************");
@@ -24,18 +23,7 @@ public class Main {
             try {
         switch (a) {
             case 0:
-                try {
-                    File file2 = new File("AbstractUser.out");
-                    File file1 = new File("Doc.out");
-                    ObjectOutputStream out1 = new ObjectOutputStream(new FileOutputStream(file1));
-                    ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream(file2));
-                    out1.writeObject(docs);
-                    out2.writeObject(users);
-                    out1.close();
-                    out2.close();
-                } catch (IOException e) {
-                    System.out.println("保存数据时出现错误：" + e.getMessage());
-                }
+                saveData();
                 System.out.println("关闭系统，欢迎下次使用");
                 System.exit(0);
                 return;
@@ -58,6 +46,10 @@ public class Main {
             }catch (SQLException e)
             {
                 System.out.println(e);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
         }
