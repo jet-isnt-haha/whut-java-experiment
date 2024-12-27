@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/seven/seven.iml" filepath="$PROJECT_DIR$/seven/seven.iml" />
       <module fileurl="file://$PROJECT_DIR$/six/six.iml" filepath="$PROJECT_DIR$/six/six.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test2/test2.iml" filepath="$PROJECT_DIR$/test2/test2.iml" />
       <module fileurl="file://$PROJECT_DIR$/three/three.iml" filepath="$PROJECT_DIR$/three/three.iml" />
       <module fileurl="file://$PROJECT_DIR$/two/two.iml" filepath="$PROJECT_DIR$/two/two.iml" />
     </modules>

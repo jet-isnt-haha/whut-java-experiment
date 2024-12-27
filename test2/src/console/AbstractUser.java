@@ -15,11 +15,13 @@ import static console.DataProcessing.insertDoc;
  * @author gongjing
  * @date 2016/10/13
  */
-public abstract class  AbstractUser  {
+public abstract class  AbstractUser implements Serializable  {
     private String name;
     private String password;
     private String role;
-//    static final double EXCEPTION_PROBABILITY=0.9;
+    private transient Scanner scanner ;
+
+    //    static final double EXCEPTION_PROBABILITY=0.9;
     String uploadpath="C:\\Users\\76018\\Desktop\\test1\\uploadPath\\";
     String downloadpath="C:\\Users\\76018\\Desktop\\test1\\downloadPath\\";
 
@@ -27,6 +29,7 @@ public abstract class  AbstractUser  {
         this.name = name;
         this.password = password;
         this.role = role;
+        this.scanner = new Scanner(System.in);
     }
 
 
@@ -113,8 +116,10 @@ public abstract class  AbstractUser  {
             }
         }
 
-        Scanner scanner = new Scanner(System.in); // 将 Scanner 设置为局部变量
         System.out.println("请输入档案编号>>");
+        if (scanner == null) {
+            scanner = new Scanner(System.in);  // 反序列化时重新初始化 scanner
+        }
         String id = scanner.next();
         System.out.println("请输入描述>>");
         String description = scanner.next();

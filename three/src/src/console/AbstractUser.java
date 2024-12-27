@@ -1,4 +1,6 @@
-package console;
+package src.console;
+
+import console.DataProcessing;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -6,7 +8,6 @@ import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.Scanner;
 
-import static console.DataProcessing.docs;
 import static console.DataProcessing.insertDoc;
 
 /**
@@ -15,11 +16,13 @@ import static console.DataProcessing.insertDoc;
  * @author gongjing
  * @date 2016/10/13
  */
-public abstract class  AbstractUser  {
+public abstract class  AbstractUser implements Serializable  {
     private String name;
     private String password;
     private String role;
-//    static final double EXCEPTION_PROBABILITY=0.9;
+    private transient Scanner scanner ;
+
+    //    static final double EXCEPTION_PROBABILITY=0.9;
     String uploadpath="C:\\Users\\76018\\Desktop\\test1\\uploadPath\\";
     String downloadpath="C:\\Users\\76018\\Desktop\\test1\\downloadPath\\";
 
@@ -27,6 +30,7 @@ public abstract class  AbstractUser  {
         this.name = name;
         this.password = password;
         this.role = role;
+        this.scanner = new Scanner(System.in);
     }
 
 
@@ -47,7 +51,7 @@ public abstract class  AbstractUser  {
      * @throws SQLException
      */
     public boolean changeSelfInfo(String password) throws SQLException{
-        if (DataProcessing.updateUser(name, password, role)){
+        if (console.DataProcessing.updateUser(name, password, role)){
             this.password=password;
             System.out.println("修改成功");
             return true;
@@ -69,7 +73,7 @@ public abstract class  AbstractUser  {
 //            throw new IOException( "Error in accessing file" );}
         //boolean result=false;
         byte [] buffer = new  byte [1024];
-        Doc doc=DataProcessing.searchDoc(id);
+        Doc doc= console.DataProcessing.searchDoc(id);
 
         if  (doc==null) {
             return  false ;
@@ -113,8 +117,10 @@ public abstract class  AbstractUser  {
             }
         }
 
-        Scanner scanner = new Scanner(System.in); // 将 Scanner 设置为局部变量
         System.out.println("请输入档案编号>>");
+        if (scanner == null) {
+            scanner = new Scanner(System.in);  // 反序列化时重新初始化 scanner
+        }
         String id = scanner.next();
         System.out.println("请输入描述>>");
         String description = scanner.next();

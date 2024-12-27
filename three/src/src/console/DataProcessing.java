@@ -1,9 +1,10 @@
-package console;
+package src.console;
 
 import java.io.*;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.sql.*;
 import java.util.Scanner;
 
 /**
@@ -13,11 +14,11 @@ import java.util.Scanner;
  * @date 2016/10/13
  */
 public class DataProcessing {
-
-    private static boolean connectToDB=false;
+    private transient Scanner scanner = new Scanner(System.in);
+    private static boolean connectToDB=true;
 private static  final String uploadpath="";
 public  static  final String downpath="";
-    static Hashtable<String, AbstractUser > users;
+    static Hashtable<String, AbstractUser> users;
     static Hashtable<String, Doc> docs;
 
     static enum ROLE_ENUM {
@@ -49,12 +50,59 @@ public  static  final String downpath="";
         users.put("rose", new Browser("rose","123","browser"));
         users.put("jack", new Operator("jack","123","operator"));
         users.put("kate", new Administrator("kate","123","administrator"));
-        init();
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         docs = new Hashtable<String,Doc>();
         docs.put("0001",new Doc("0001","jack",timestamp,"Doc Source Java","Doc.java"));
+
+        init();
     }
+
+    public static void saveData() throws IOException {
+        File file2 = new File("AbstractUser.out");
+        File file1 = new File("Doc.out");
+        if(!file1.exists()){
+            Timestamp timestamp =new Timestamp(System.currentTimeMillis());
+            Doc doc =new  Doc("0001","jack",timestamp,"Doc Source Java","Doc.java");
+            docs.put(doc.getId(),doc);
+        }
+        if(!file2.exists()){
+            users.put("rose", new Browser("rose","123","browser"));
+            users.put("jack", new Operator("jack","123","operator"));
+            users.put("kate", new Administrator("kate","123","administrator"));
+        }
+        ObjectOutputStream out2 =new ObjectOutputStream(new FileOutputStream(file2));
+        ObjectOutputStream out1 =new ObjectOutputStream(new FileOutputStream(file1));
+
+        out2.writeObject(users);
+        out1.writeObject(docs);
+    }
+
+public static void loadData() throws IOException, ClassNotFoundException {
+    File file2 = new File("AbstractUser.out");
+    File file1 = new File("Doc.out");
+    if(!file1.exists()){
+        Timestamp timestamp =new Timestamp(System.currentTimeMillis());
+        Doc doc =new  Doc("0001","jack",timestamp,"Doc Source Java","Doc.java");
+        docs.put(doc.getId(),doc);
+    }
+    if(!file2.exists()){
+        users.put("rose", new Browser("rose","123","browser"));
+        users.put("jack", new Operator("jack","123","operator"));
+        users.put("kate", new Administrator("kate","123","administrator"));
+    }if (file1.length() > 0 && file2.length() > 0) {
+        // 读取文件内容
+        ObjectInputStream in1 = new ObjectInputStream(new FileInputStream(file1));
+        ObjectInputStream in2 = new ObjectInputStream(new FileInputStream(file2));
+        docs = (Hashtable<String, Doc>) in1.readObject();
+        users = (Hashtable<String, AbstractUser>) in2.readObject();
+        in1.close();
+        in2.close();
+    } else {
+        // 处理文件为空的情况
+        System.out.println("文件为空，使用默认数据");
+    }
+}
 
     /**
      * TODO 初始化，连接数据库
@@ -65,50 +113,12 @@ public  static  final String downpath="";
      */
     public static  void init(){
         connectToDB = true;
-        try{
-            File file2 =new File("AbstractUser.out");
-            File file1 =new File("Doc.out");
-//    ObjectOutputStream out1 =new ObjectOutputStream(new FileOutputStream(file1));
-//    ObjectOutputStream out2 =new ObjectOutputStream(new FileOutputStream(file2));
-//    Timestamp timestamp =new Timestamp(System.currentTimeMillis());
-//    AbstractUser user= new AbstractUser("kate", "123", "administrator") {
-//        @Override
-//        public void showMenu() {
-//
-//        }
-//    };
-//    Doc doc =new  Doc("0001","jack",timestamp,"Doc Source Java","Doc.java");
-//    out1.writeObject(doc);
-//    out2.writeObject(user);
-//    out1.close();
-//    out2.close();
-
-            if(!file1.exists()){
-                Timestamp timestamp =new Timestamp(System.currentTimeMillis());
-                Doc doc =new  Doc("0001","jack",timestamp,"Doc Source Java","Doc.java");
-                docs.put(doc.getId(),doc);
-            }
-            if(!file2.exists()){
-                AbstractUser user= new AbstractUser("kate", "123", "administrator") {
-                    @Override
-                    public void showMenu() {
-
-                    }
-                };
-                users.put(user.getName(),user);
-            }
-            ObjectInputStream in1 =new ObjectInputStream(new FileInputStream(file1));
-            users=(Hashtable<String,  AbstractUser>)in1.readObject();
-            in1.close();
-            ObjectInputStream in2 =new ObjectInputStream(new FileInputStream(file2));
-            docs=(Hashtable<String, Doc>)in2.readObject();
-            in2.close();
-            System.out.println(users);
-            System.out.println(docs);
-        }catch (IOException e){
-            System.out.println(e);
-        }catch (ClassNotFoundException e){
-            System.out.println(e);
+        try {
+            loadData();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
